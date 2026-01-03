@@ -12,7 +12,7 @@ class DailyPrayer extends Equatable {
   factory DailyPrayer.empty(DateTime date) {
     return DailyPrayer(
       date: date,
-      prayers: {
+      prayers: const {
         PrayerType.fajr: false,
         PrayerType.dhuhr: false,
         PrayerType.asr: false,

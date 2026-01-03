@@ -27,49 +27,9 @@ class _HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: BlocBuilder<PrayerBloc, PrayerState>(
-          builder: (context, state) {
-            String title = 'Sajda';
-            if (state is PrayerLoaded) {
-              title = DateFormat('MMMM yyyy').format(state.currentMonth);
-            }
-            return Text(title);
-          },
-        ),
+        title: const Text('Sajda'),
         actions: [
-          BlocBuilder<PrayerBloc, PrayerState>(
-            builder: (context, state) {
-              if (state is! PrayerLoaded) return const SizedBox.shrink();
-              return Row(
-                children: [
-                  IconButton(
-                    icon: const Icon(Icons.chevron_left),
-                    onPressed: () {
-                      final prevMonth = DateTime(
-                        state.currentMonth.year,
-                        state.currentMonth.month - 1,
-                      );
-                      context.read<PrayerBloc>().add(
-                        LoadMonthPrayers(prevMonth),
-                      );
-                    },
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.chevron_right),
-                    onPressed: () {
-                      final nextMonth = DateTime(
-                        state.currentMonth.year,
-                        state.currentMonth.month + 1,
-                      );
-                      context.read<PrayerBloc>().add(
-                        LoadMonthPrayers(nextMonth),
-                      );
-                    },
-                  ),
-                ],
-              );
-            },
-          ),
+          IconButton(icon: const Icon(Icons.settings), onPressed: () {}),
         ],
       ),
       body: BlocBuilder<PrayerBloc, PrayerState>(
@@ -82,6 +42,47 @@ class _HomeView extends StatelessWidget {
                 StatsOverview(
                   prayers: state.prayers,
                   currentMonth: state.currentMonth,
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16.0,
+                    vertical: 8.0,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.chevron_left),
+                        onPressed: () {
+                          final prevMonth = DateTime(
+                            state.currentMonth.year,
+                            state.currentMonth.month - 1,
+                          );
+                          context.read<PrayerBloc>().add(
+                            LoadMonthPrayers(prevMonth),
+                          );
+                        },
+                      ),
+                      Text(
+                        DateFormat('MMMM yyyy').format(state.currentMonth),
+                        style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.chevron_right),
+                        onPressed: () {
+                          final nextMonth = DateTime(
+                            state.currentMonth.year,
+                            state.currentMonth.month + 1,
+                          );
+                          context.read<PrayerBloc>().add(
+                            LoadMonthPrayers(nextMonth),
+                          );
+                        },
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: MonthGrid(

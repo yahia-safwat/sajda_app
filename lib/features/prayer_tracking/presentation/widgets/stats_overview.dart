@@ -18,7 +18,7 @@ class StatsOverview extends StatelessWidget {
     // Calculate stats
     int totalPrayersPossible = 0;
     int attendedCount = 0;
-    int currentStreak = 0;
+    // int currentStreak = 0;
 
     // Sort by date
     final sortedPrayers = List<DailyPrayer>.from(prayers)
@@ -56,7 +56,7 @@ class StatsOverview extends StatelessWidget {
         borderRadius: BorderRadius.circular(20),
         boxShadow: [
           BoxShadow(
-            color: Theme.of(context).primaryColor.withOpacity(0.3),
+            color: Theme.of(context).primaryColor.withValues(alpha: 0.3),
             blurRadius: 15,
             offset: const Offset(0, 5),
           ),
@@ -91,7 +91,10 @@ class StatsOverview extends StatelessWidget {
         const SizedBox(height: 4),
         Text(
           label,
-          style: TextStyle(fontSize: 12, color: Colors.white.withOpacity(0.8)),
+          style: TextStyle(
+            fontSize: 12,
+            color: Colors.white.withValues(alpha: 0.8),
+          ),
         ),
       ],
     );
